@@ -489,10 +489,10 @@ def data_insights():
 
     st.plotly_chart(fig, use_container_width=True)
 
-    # Kesimpulan Analisis
+    # Analysis Conclusion
     st.header("💡 Kesimpulan Analisis")
     
-    # Demografis
+    # Demographics
     with st.expander("📊 Kesimpulan Demografis"):
         st.markdown("""
         <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
@@ -505,7 +505,7 @@ def data_insights():
         </div>
         """, unsafe_allow_html=True)
 
-    # Akademik
+    # Academics
     with st.expander("📚 Kesimpulan Performa Akademik"):
         st.markdown("""
         <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
@@ -518,7 +518,7 @@ def data_insights():
         </div>
         """, unsafe_allow_html=True)
 
-    # Finansial
+    # Financial
     with st.expander("💰 Kesimpulan Faktor Finansial"):
         st.markdown("""
         <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
@@ -531,7 +531,7 @@ def data_insights():
         </div>
         """, unsafe_allow_html=True)
 
-    # Rekomendasi
+    # Recommendation
     with st.expander("🎯 Rekomendasi Tindakan"):
         st.markdown("""
         <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>

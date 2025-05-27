@@ -115,7 +115,7 @@ jedi==0.19.2
 Jinja2==3.1.3
 jiter==0.8.2
 jmespath==1.0.1
-joblib==1.3.2
+joblib>=1.3.0
 jsonpath-python==1.0.6
 jsonschema==4.23.0
 jsonschema-specifications==2024.10.1
@@ -146,7 +146,7 @@ Markdown==3.6
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 marshmallow==3.26.1
-matplotlib==3.7.5
+matplotlib>=3.7.0
 matplotlib-inline==0.1.7
 mdurl==0.1.2
 mistralai==1.5.0
@@ -166,7 +166,7 @@ nest-asyncio==1.6.0
 networkx==3.4.2
 nltk==3.9.1
 numba==0.61.2
-numpy==1.26.4
+numpy>=1.24.0
 onnx==1.18.0
 onnx-tf==1.6.0
 onnxruntime==1.22.0
@@ -186,7 +186,7 @@ orjson==3.10.18
 ortools==9.12.4544
 outcome==1.3.0.post0
 packaging==24.2
-pandas==2.1.4
+pandas>=2.0.0
 pandas-flavor==0.6.0
 parso==0.8.4
 pathspec==0.12.1
@@ -196,7 +196,7 @@ pillow==11.0.0
 pillow_heif==0.22.0
 pingouin==0.5.5
 platformdirs==4.3.6
-plotly==5.24.1
+plotly>=5.13.0
 plotly-resampler==0.10.0
 pmdarima==2.0.4
 pooch==1.8.2
@@ -255,10 +255,10 @@ Sastrawi==1.0.1
 schemdraw==0.15
 scikeras==0.13.0
 scikit-base==0.7.8
-scikit-learn==1.4.2
+scikit-learn>=1.3.0
 scikit-plot==0.3.7
 scipy==1.11.4
-seaborn==0.13.2
+seaborn>=0.12.0
 selenium==4.15.2
 semver==3.0.4
 sentencepiece==0.2.0
@@ -281,7 +281,7 @@ srsly==2.5.1
 stack-data==0.6.3
 starlette==0.41.3
 statsmodels==0.14.4
-streamlit==1.40.1
+streamlit>=1.30.0
 streamlit-player==0.1.5
 streamlit-timeline==0.0.2
 sympy==1.13.1
@@ -344,7 +344,7 @@ wordninja==2.0.0
 wrapt==1.16.0
 wsproto==1.2.0
 xarray==2025.3.1
-xgboost==2.1.4
+xgboost>=2.0.0
 xx_ent_wiki_sm @ https://github.com/explosion/spacy-models/releases/download/xx_ent_wiki_sm-3.8.0/xx_ent_wiki_sm-3.8.0-py3-none-any.whl#sha256=6f3c4b853852ea9e9d2dc76cc950dddb10a7e4c42d813308caefe6c5e8be2f0a
 xxhash==3.5.0
 yamllint==1.37.1
