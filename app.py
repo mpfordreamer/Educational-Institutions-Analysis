@@ -169,19 +169,26 @@ def home_page():
     # Title
     st.title("🎓 Student Academic Success Analysis")
 
-    col1, col2 = st.columns([2, 2])  
+    col1, col2 = st.columns([2, 3])  
 
     with col1:
         try:
-            st.markdown("""
-            <div style="display: flex; align-items: center; justify-content: center;">
-                <img src="https://raw.githubusercontent.com/demahesta/educational-institutions-analysis/main/asset/jayajaya.png " 
-                     alt="Logo Institusi" 
-                     style="max-width: 100%; height: auto; border-radius: 10px;">
-            </div>
-            """, unsafe_allow_html=True)
+            # Coba muat gambar dari path lokal
+            if os.path.exists("asset/jayajaya.png"):
+                st.image("asset/jayajaya.png", use_column_width=True, caption="Logo Institusi")
+            else:
+                # Jika file tidak ditemukan di lokal, gunakan URL dari GitHub
+                github_image_url = "https://github.com/mpfordreamer/Educational-Institutions-Analysis/blob/main/asset/jayajaya.png?raw=true "
+                st.image(github_image_url, use_column_width=True, caption="Logo Institusi")
         except Exception as e:
-            st.error("⚠️ Logo institusi gagal dimuat. Pastikan file tersedia.")
+            # Jika gagal, tampilkan pesan fallback
+            st.markdown(f"""
+            <div style='background-color: #2e2e2e; padding: 15px; border-radius: 8px; text-align: center;'>
+                <h4>⚠️ Logo Tidak Ditemukan</h4>
+                <p>Pastikan file 'asset/jayajaya.png' tersedia di repo GitHub.</p>
+                <p>Error Detail: {str(e)}</p>
+            </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         # Background Institution Section
