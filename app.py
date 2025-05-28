@@ -85,9 +85,6 @@ def home_page():
         st.metric("Dropout Rate", f"{(df['Status'] == 'Dropout').mean():.1%}")
         st.metric("Graduation Rate", f"{(df['Status'] == 'Graduate').mean():.1%}")
 
-    # Pie Chart Distribusi Status
-    st.markdown("
-
 # Load dataset for visualization
 df = pd.read_csv('dataset/dashboard_full_predictions.csv')
 
