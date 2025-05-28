@@ -9,14 +9,6 @@ from xgboost import XGBClassifier
 from sklearn.datasets import make_classification
 import os
 
-# 📦 Import Library
-import streamlit as st
-import pandas as pd
-import numpy as np
-import joblib
-import plotly.express as px
-import matplotlib.pyplot as plt
-
 # Load the model and scaler
 try:
     model = joblib.load('model/best_model.joblib')
@@ -177,16 +169,16 @@ def home_page():
     col1, col2 = st.columns([2, 2])  
 
     with col1:
-        # Handle image loading with error checking
-        if os.path.exists("asset/jayajaya.png"):
-            st.image("asset/jayajaya.png", width=500, caption="Jaya Jaya Institut Teknologi Indonesia")
-        else:
+        try:
             st.markdown("""
-            <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #777777; text-align: center;'>
-                <h4>Logo Institusi Tidak Ditemukan</h4>
-                <p>Mohon pastikan file 'asset/jayajaya.png' sudah diupload ke GitHub.</p>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <img src="https://raw.githubusercontent.com/demahesta/educational-institutions-analysis/main/asset/jayajaya.png " 
+                     alt="Logo Institusi" 
+                     style="max-width: 100%; height: auto; border-radius: 10px;">
             </div>
             """, unsafe_allow_html=True)
+        except Exception as e:
+            st.error("⚠️ Logo institusi gagal dimuat. Pastikan file tersedia.")
 
     with col2:
         # Background Institution Section
