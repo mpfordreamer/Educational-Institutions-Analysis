@@ -9,26 +9,29 @@ from xgboost import XGBClassifier
 from sklearn.datasets import make_classification
 import os
 
-# Load the model and scaler with error handling
+# Load the model and scaler
 try:
-    model = joblib.load('model/best_model.joblib')
+    # Coba muat model dalam format .pkl atau .joblib
+    model_path = 'model/best_model.pkl' if os.path.exists('model/best_model.pkl') else 'model/best_model.joblib'
+    model = joblib.load(model_path)
+    
+    # Muat scaler
     scaler = joblib.load('model/scaler.joblib')
-except FileNotFoundError as e:
-    st.error("🚨 File model atau scaler tidak ditemukan. Pastikan semua file tersedia.")
-    st.stop()
 except Exception as e:
-    st.error(f"🚨 Error saat memuat model: {str(e)}")
+    st.error(f"🚨 Gagal memuat model atau scaler: {str(e)}")
     st.stop()
 
 # Load dataset for visualization
 try:
     df = pd.read_csv('dataset/dashboard_full_predictions.csv')
 except FileNotFoundError:
-    st.error("🚨 Dataset tidak ditemukan. Pastikan file 'dashboard_full_predictions.csv' tersedia.")
-    st.stop()
+    st.warning("⚠️ Dataset tidak ditemukan. Beberapa visualisasi tidak akan muncul.")
+    df = pd.DataFrame()  # Fallback dataframe kosong
 
-# Define ALL_FEATURES 
-status_map = {0: 'Dropout', 1: 'Lulus', 2: 'Aktif'}
+# Mapping label
+status_map = {0: 'Dropout', 1: 'Graduate', 2: 'Enrolled'}
+
+# Daftar fitur penting
 ALL_FEATURES = [
     'Marital_status', 'Application_mode', 'Application_order', 'Course',
     'Daytime_evening_attendance', 'Previous_qualification', 'Previous_qualification_grade',
@@ -614,8 +617,6 @@ def data_insights():
         """, unsafe_allow_html=True)
 
 # Prediction_page
-
-# Prediction_page
 def prediction_page():
     """Halaman prediksi status akademik mahasiswa menggunakan model XGBoost"""
     
@@ -709,33 +710,44 @@ def prediction_page():
 
             # Recommendations in Indonesian
             if predicted_status == 'Dropout':
-                st.warning("⚠ Risiko DO Tinggi! Pertimbangkan untuk memberikan bantuan akademik dan finansial.")
+                st.warning("⚠️ Risiko DO Tinggi! Pertimbangkan untuk memberikan bantuan akademik dan finansial.")
             elif predicted_status == 'Lulus':
                 st.success("✅ Potensi Kelulusan Tinggi! Pertahankan prestasi akademik.")
             else:
-                st.info("ℹ Mahasiswa diprediksi tetap aktif. Pantau perkembangan secara berkala.")
+                st.info("ℹ️ Mahasiswa diprediksi tetap aktif. Pantau perkembangan secara berkala.")
                 
         except Exception as e:
             st.error(f"Error Prediksi: {str(e)}")
             st.info("Pastikan semua field terisi dengan benar.")
 
-# Main App
 def main():
-    st.title("🎓 Dashboard Prediksi Mahasiswa Dropout - Jaya Jaya Institut Teknologi Indonesia")
+    # Set page config
+    st.set_page_config(
+        page_title="Student Success Predictor",
+        page_icon="🎓",
+        layout="wide"
+    )
 
-    # Tabs Navigation
-    tabs = st.tabs(["🏠 Beranda", "📊 Analisis Data", "🔮 Prediksi"])
+    # Add title before tabs
+    st.title("Jaya Jaya Institut Teknologi Indonesia Dashboard")
 
+    # Create tabs (Continuity principle)
+    tabs = st.tabs(["🏠 Home", "📊 Data Insights", "🔮 Predict"])
+    
     with tabs[0]:
         home_page()
     with tabs[1]:
-        st.write("📈 Halaman analisis data belum siap")
+        data_insights()
     with tabs[2]:
         prediction_page()
 
     # Footer
     st.markdown("---")
-    st.markdown("<div style='text-align: center; color: #AAAAAA;'>Developed by I Dewa Gede Mahesta Parawangsa | Dicoding ID: demahesta</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='text-align: center;'>
+        <p>Developed by I Dewa Gede Mahesta Parawangsa | Dicoding ID: demahesta</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
