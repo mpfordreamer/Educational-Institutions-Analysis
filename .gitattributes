@@ -1,4 +1,8 @@
+# Binary files tracked with Git LFS
 *.joblib filter=lfs diff=lfs merge=lfs -text
 *.csv filter=lfs diff=lfs merge=lfs -text
 *.xlsx filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
+
+# Specific file overrides
+asset/jayajaya.png -filter=lfs -diff=lfs -merge=lfs -text
