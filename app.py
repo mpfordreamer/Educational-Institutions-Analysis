@@ -61,7 +61,7 @@ def home_page():
     col1, col2 = st.columns([2, 3])
     with col1:
         if os.path.exists("asset/jayajaya.png"):
-            st.image("asset/jayajaya.png", use_container_width=True, caption="Jaya Jaya Institut Teknologi Indonesia")
+            st.image("asset/jayajaya.png", width=400, caption="Jaya Jaya Institut Teknologi Indonesia")
         else:
             st.markdown("""
             <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #777777; text-align: center;'>
