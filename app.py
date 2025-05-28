@@ -107,7 +107,7 @@ def home_page():
     with col1:
         # Handle image loading with error checking
         if os.path.exists("asset/jayajaya.png"):
-            st.image("asset/jayajaya.png", use_container_width=True, caption="Jaya Jaya Institut Teknologi Indonesia")
+            st.image("asset/jayajaya.png", width=700, caption="Jaya Jaya Institut Teknologi Indonesia")
         else:
             st.markdown("""
             <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #777777; text-align: center;'>
