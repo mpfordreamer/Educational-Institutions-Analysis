@@ -27,7 +27,8 @@ except FileNotFoundError:
     st.error("🚨 Dataset tidak ditemukan. Pastikan file 'dashboard_full_predictions.csv' tersedia.")
     st.stop()
 
-# Define ALL_FEATURES (sesuai dengan fitur yang digunakan saat training)
+# Define ALL_FEATURES 
+status_map = {0: 'Dropout', 1: 'Lulus', 2: 'Aktif'}
 ALL_FEATURES = [
     'Marital_status', 'Application_mode', 'Application_order', 'Course',
     'Daytime_evening_attendance', 'Previous_qualification', 'Previous_qualification_grade',
