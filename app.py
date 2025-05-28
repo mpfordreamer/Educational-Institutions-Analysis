@@ -7,6 +7,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from xgboost import XGBClassifier
 from sklearn.datasets import make_classification
+import os
 
 # Load the model and scaler
 model = joblib.load('model/best_model.joblib')
@@ -105,15 +106,13 @@ def home_page():
 
     with col1:
         # Handle image loading with error checking
-        try:
+        if os.path.exists("asset/jayajaya.png"):
             st.image("asset/jayajaya.png", use_container_width=True, caption="Jaya Jaya Institut Teknologi Indonesia")
-        except:
-            # Fallback if image not found
-            st.error("⚠️ Image not found. Please ensure 'asset/jayajaya.png' exists in your project directory.")
+        else:
             st.markdown("""
-            <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #FFFFFF; text-align: center;'>
-                <h2 style='color: #FFFFFF;'>Jaya Jaya Institut Teknologi Indonesia</h2>
-                <p style='color: #FFFFFF;'>[Image Placeholder]</p>
+            <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #777777; text-align: center;'>
+                <h4>Logo Institusi Tidak Ditemukan</h4>
+                <p>Mohon pastikan file 'asset/jayajaya.png' sudah diupload ke GitHub.</p>
             </div>
             """, unsafe_allow_html=True)
 
