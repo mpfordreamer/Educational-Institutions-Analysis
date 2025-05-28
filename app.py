@@ -48,10 +48,6 @@ ALL_FEATURES = [
     'Unemployment_rate', 'Inflation_rate', 'GDP'
 ]
 
-# Mapping untuk label
-status_map = {0: 'Dropout', 1: 'Graduate', 2: 'Enrolled'}
-gender_map = {0: 'Female', 1: 'Male'}
-
 # Fungsi Home Page
 def home_page():
     st.title("🎓 Student Academic Success Analysis")
