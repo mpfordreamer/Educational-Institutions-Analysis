@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import pandas as pd
 import numpy as np
 import joblib
@@ -7,10 +7,75 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from xgboost import XGBClassifier
 from sklearn.datasets import make_classification
+import os
 
 # Load the model and scaler
-model = joblib.load('model/best_model.joblib')
-scaler = joblib.load('model/scaler.joblib')
+try:
+    model = joblib.load('model/best_model.joblib')
+    scaler = joblib.load('model/scaler.joblib')
+except Exception as e:
+    st.error(f"🚨 Gagal memuat model/scaler: {str(e)}")
+    st.stop()
+
+# Load dataset for visualization
+try:
+    df = pd.read_csv('dataset/dashboard_full_predictions.csv')
+except FileNotFoundError:
+    st.error("🚨 Dataset tidak ditemukan. Pastikan file 'dashboard_full_predictions.csv' tersedia.")
+    st.stop()
+
+# Define ALL_FEATURES (sesuai dengan fitur yang digunakan saat training)
+ALL_FEATURES = [
+    'Marital_status', 'Application_mode', 'Application_order', 'Course',
+    'Daytime_evening_attendance', 'Previous_qualification', 'Previous_qualification_grade',
+    'Nacionality', 'Mothers_qualification', 'Fathers_qualification',
+    'Mothers_occupation', 'Fathers_occupation', 'Admission_grade', 'Displaced',
+    'Educational_special_needs', 'Debtor', 'Tuition_fees_up_to_date', 'Gender',
+    'Scholarship_holder', 'Age_at_enrollment', 'International',
+    'Curricular_units_1st_sem_credited', 'Curricular_units_1st_sem_enrolled',
+    'Curricular_units_1st_sem_evaluations', 'Curricular_units_1st_sem_approved',
+    'Curricular_units_1st_sem_grade', 'Curricular_units_1st_sem_without_evaluations',
+    'Curricular_units_2nd_sem_credited', 'Curricular_units_2nd_sem_enrolled',
+    'Curricular_units_2nd_sem_evaluations', 'Curricular_units_2nd_sem_approved',
+    'Curricular_units_2nd_sem_grade', 'Curricular_units_2nd_sem_without_evaluations',
+    'Unemployment_rate', 'Inflation_rate', 'GDP'
+]
+
+# Mapping untuk label
+status_map = {0: 'Dropout', 1: 'Graduate', 2: 'Enrolled'}
+gender_map = {0: 'Female', 1: 'Male'}
+
+# Fungsi Home Page
+def home_page():
+    st.title("🎓 Student Academic Success Analysis")
+
+    # Judul dan logo institusi
+    st.markdown("""
+    <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; margin-bottom: 20px;'>
+        <h3 style='color: #1f77b4;'>Jaya Jaya Institut Teknologi Indonesia</h3>
+        <p style='color: #CCCCCC;'>Aplikasi ini membantu mendeteksi risiko mahasiswa Dropout sejak awal pendaftaran.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Gambar institusi (fallback jika tidak ditemukan)
+    col1, col2 = st.columns([2, 3])
+    with col1:
+        if os.path.exists("asset/jayajaya.png"):
+            st.image("asset/jayajaya.png", width=400, caption="Jaya Jaya Institut Teknologi Indonesia")
+        else:
+            st.markdown("""
+            <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #777777; text-align: center;'>
+                <h4>Logo Institusi Tidak Ditemukan</h4>
+                <p>Mohon pastikan file 'asset/jayajaya.png' sudah diupload ke GitHub.</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with col2:
+        # Statistik utama
+        st.markdown("### 🔍 Ringkasan Data")
+        st.metric("Total Mahasiswa", len(df))
+        st.metric("Dropout Rate", f"{(df['Status'] == 'Dropout').mean():.1%}")
+        st.metric("Graduation Rate", f"{(df['Status'] == 'Graduate').mean():.1%}")
 
 # Load dataset for visualization
 df = pd.read_csv('dataset/dashboard_full_predictions.csv')
@@ -104,18 +169,16 @@ def home_page():
     col1, col2 = st.columns([2, 2])  
 
     with col1:
-        # Handle image loading with error checking
         try:
-            st.image("asset/jayajaya.png", use_container_width=True, caption="Jaya Jaya Institut Teknologi Indonesia")
-        except:
-            # Fallback if image not found
-            st.error("⚠️ Image not found. Please ensure 'asset/jayajaya.png' exists in your project directory.")
             st.markdown("""
-            <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #FFFFFF; text-align: center;'>
-                <h2 style='color: #FFFFFF;'>Jaya Jaya Institut Teknologi Indonesia</h2>
-                <p style='color: #FFFFFF;'>[Image Placeholder]</p>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <img src="https://raw.githubusercontent.com/demahesta/educational-institutions-analysis/main/asset/jayajaya.png " 
+                     alt="Logo Institusi" 
+                     style="max-width: 100%; height: auto; border-radius: 10px;">
             </div>
             """, unsafe_allow_html=True)
+        except Exception as e:
+            st.error("⚠️ Logo institusi gagal dimuat. Pastikan file tersedia.")
 
     with col2:
         # Background Institution Section
