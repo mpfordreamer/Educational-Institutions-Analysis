@@ -615,122 +615,82 @@ def data_insights():
 
 # Prediction_page
 def prediction_page():
-    st.title("🔮 Prediksi Status Akademik Mahasiswa")
-
-    st.markdown("""
-    <div style='background-color: #1E1E1E; padding: 15px; border-radius: 8px; margin-bottom: 20px;'>
-        <p style='color: #FFFFFF;'>Masukkan informasi mahasiswa baru untuk memprediksi apakah ia akan Dropout, Graduate, atau Enrolled</p>
-    </div>
-    """, unsafe_allow_html=True)
-
+    st.title("🔮 Prediksi Status Mahasiswa")
+    
+    # Input fields
     input_data = {}
 
-    # Kolom input
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("### 📚 Informasi Demografis & Sosial")
-        input_data['Marital_status'] = st.selectbox("Status Perkawinan", options=[1, 2, 3, 4, 5, 6], 
-                                                  format_func=lambda x: {
-                                                      1: "Single", 2: "Married", 3: "Widower",
-                                                      4: "Divorced", 5: "Facto Union", 6: "Legally Separated"
-                                                  }[x])
-        input_data['Gender'] = st.selectbox("Jenis Kelamin", [0, 1],
-                                           format_func=lambda x: "Male" if x == 1 else "Female")
-        input_data['Age_at_enrollment'] = st.number_input("Usia Saat Mendaftar", 17, 70, 20)
-        input_data['Application_mode'] = st.selectbox("Metode Pendaftaran", df['Application_mode'].unique() if not df.empty else [1, 2, 3])
-        input_data['Course'] = st.selectbox("Jurusan", df['Course'].unique() if not df.empty else [1, 2, 3])
-        input_data['Daytime_evening_attendance'] = st.selectbox("Jadwal Kuliah", [1, 0], 
-                                                              format_func=lambda x: "Daytime" if x == 1 else "Evening")
-        input_data['Scholarship_holder'] = st.selectbox("Penerima Beasiswa", [0, 1],
-                                                     format_func=lambda x: "Ya" if x == 1 else "Tidak")
-        input_data['Debtor'] = st.selectbox("Memiliki Utang", [0, 1],
-                                           format_func=lambda x: "Ya" if x == 1 else "Tidak")
-        input_data['Displaced'] = st.selectbox("Mahasiswa Terlantar", [0, 1],
-                                             format_func=lambda x: "Ya" if x == 1 else "Tidak")
-        input_data['International'] = st.selectbox("Internasional", [0, 1],
-                                                 format_func=lambda x: "Ya" if x == 1 else "Tidak")
-        input_data['Educational_special_needs'] = st.selectbox("Kebutuhan Khusus", [0, 1],
-                                                             format_func=lambda x: "Ya" if x == 1 else "Tidak")
-        input_data['Tuition_fees_up_to_date'] = st.selectbox("Biaya Kuliah Lunas", [0, 1],
-                                                           format_func=lambda x: "Ya" if x == 1 else "Tidak")
+        st.markdown("### 🎓 Informasi Akademik")
+        input_data['Previous_qualification_grade'] = st.number_input("Previous Qualification Grade", 0.0, 200.0, 120.0)
+        input_data['Admission_grade'] = st.number_input("Admission Grade", 0.0, 200.0, 120.0)
+        input_data['Curricular_units_1st_sem_approved'] = st.number_input("1st Semester Approved Units", 0, 20, 5)
+        input_data['Curricular_units_2nd_sem_approved'] = st.number_input("2nd Semester Approved Units", 0, 20, 5)
+        input_data['Curricular_units_1st_sem_grade'] = st.number_input("1st Semester Average Grade", 0.0, 20.0, 12.0)
+        input_data['Curricular_units_2nd_sem_grade'] = st.number_input("2nd Semester Average Grade", 0.0, 20.0, 12.0)
 
     with col2:
-        st.markdown("### 📊 Informasi Akademik")
-        input_data['Previous_qualification'] = st.selectbox("Kualifikasi Sebelumnya", df['Previous_qualification'].unique() if not df.empty else [1, 2, 3])
-        input_data['Previous_qualification_grade'] = st.number_input("Nilai Kualifikasi Sebelumnya", 0.0, 200.0, 120.0)
-        input_data['Admission_grade'] = st.number_input("Nilai Masuk", 0.0, 200.0, 120.0)
+        st.markdown("### 👥 Informasi Pribadi & Sosial")
+        input_data['Age_at_enrollment'] = st.number_input("Usia Saat Mendaftar", 17, 70, 20)
+        input_data['Gender'] = st.selectbox("Jenis Kelamin", ["Female", "Male"])
+        input_data['Marital_status'] = st.selectbox("Status Perkawinan", 
+                                                  ["Single", "Married", "Widower", "Divorced", "Legally Separated"])
+        input_data['Application_mode'] = st.selectbox("Metode Pendaftaran", df['Application_mode'].unique())
+        input_data['Application_order'] = st.selectbox("Urutan Aplikasi", list(range(0, 10)))
+        input_data['Course'] = st.selectbox("Jurusan", df['Course'].unique())
+        input_data['Scholarship_holder'] = st.selectbox("Penerima Beasiswa", ["No", "Yes"])
+        input_data['Debtor'] = st.selectbox("Memiliki Utang", ["No", "Yes"])
+        input_data['Tuition_fees_up_to_date'] = st.selectbox("Biaya Kuliah Lunas", ["No", "Yes"])
+        input_data['Displaced'] = st.selectbox("Mahasiswa Terlantar", ["No", "Yes"])
+        input_data['International'] = st.selectbox("Internasional", ["No", "Yes"])
 
-        st.markdown("#### Semester 1")
-        input_data['Curricular_units_1st_sem_credited'] = st.number_input("Unit Terkredit 1st Sem.", 0, 20, 6)
-        input_data['Curricular_units_1st_sem_enrolled'] = st.number_input("Unit Diambil 1st Sem.", 0, 20, 6)
-        input_data['Curricular_units_1st_sem_evaluations'] = st.number_input("Evaluasi 1st Sem.", 0, 20, 6)
-        input_data['Curricular_units_1st_sem_approved'] = st.number_input("Unit Disetujui 1st Sem.", 0, 20, 5)
-        input_data['Curricular_units_1st_sem_grade'] = st.number_input("Rata-rata Nilai 1st Sem.", 0.0, 20.0, 12.0)
-        input_data['Curricular_units_1st_sem_without_evaluations'] = st.number_input("Unit Tanpa Evaluasi 1st Sem.", 0, 20, 0)
+    # Encode kategori ke numerik
+    input_data['Gender'] = 1 if input_data['Gender'] == "Male" else 0
+    input_data['Scholarship_holder'] = 1 if input_data['Scholarship_holder'] == "Yes" else 0
+    input_data['Debtor'] = 1 if input_data['Debtor'] == "Yes" else 0
+    input_data['Tuition_fees_up_to_date'] = 1 if input_data['Tuition_fees_up_to_date'] == "Yes" else 0
+    input_data['Displaced'] = 1 if input_data['Displaced'] == "Yes" else 0
+    input_data['International'] = 1 if input_data['International'] == "Yes" else 0
+    
+    # Encode Marital_status
+    marital_map = {
+        "Single": 1,
+        "Married": 2,
+        "Widower": 3,
+        "Divorced": 4,
+        "Legally Separated": 6
+    }
+    input_data['Marital_status'] = marital_map[input_data['Marital_status']]
 
-        st.markdown("#### Semester 2")
-        input_data['Curricular_units_2nd_sem_credited'] = st.number_input("Unit Terkredit 2nd Sem.", 0, 20, 6)
-        input_data['Curricular_units_2nd_sem_enrolled'] = st.number_input("Unit Diambil 2nd Sem.", 0, 20, 6)
-        input_data['Curricular_units_2nd_sem_evaluations'] = st.number_input("Evaluasi 2nd Sem.", 0, 20, 6)
-        input_data['Curricular_units_2nd_sem_approved'] = st.number_input("Unit Disetujui 2nd Sem.", 0, 20, 5)
-        input_data['Curricular_units_2nd_sem_grade'] = st.number_input("Rata-rata Nilai 2nd Sem.", 0.0, 20.0, 12.0)
-        input_data['Curricular_units_2nd_sem_without_evaluations'] = st.number_input("Tanpa Evaluasi 2nd Sem.", 0, 20, 0)
-
-        input_data['Nacionality'] = st.selectbox("Kewarganegaraan", df['Nacionality'].unique() if not df.empty else [1, 2, 3])
-        input_data['Mothers_qualification'] = st.selectbox("Pendidikan Ibu", df['Mothers_qualification'].unique() if not df.empty else [1, 2])
-        input_data['Fathers_qualification'] = st.selectbox("Pendidikan Ayah", df['Fathers_qualification'].unique() if not df.empty else [1, 2])
-        input_data['Mothers_occupation'] = st.selectbox("Pekerjaan Ibu", df['Mothers_occupation'].unique() if not df.empty else [1, 2])
-        input_data['Fathers_occupation'] = st.selectbox("Pekerjaan Ayah", df['Fathers_occupation'].unique() if not df.empty else [1, 2])
-        input_data['Unemployment_rate'] = st.number_input("Tingkat Pengangguran (%)", -10.0, 100.0, 5.5)
-        input_data['Inflation_rate'] = st.number_input("Inflasi (%)", -10.0, 100.0, 0.02)
-        input_data['GDP'] = st.number_input("Pertumbuhan GDP (%)", -10.0, 100.0, 1.2)
-
-    # Konversi ke DataFrame sesuai urutan fitur
+    # Buat DataFrame
     try:
         input_df = pd.DataFrame([input_data])[ALL_FEATURES]
     except KeyError as e:
-        st.error(f"🚨 Fitur tidak cocok: {str(e)}")
+        missing = set(ALL_FEATURES) - set(input_data.keys())
+        st.error(f"🚨 Fitur berikut tidak ditemukan: {missing}")
         return
 
-    # Scaling fitur numerik
-    try:
-        scaled_features = scaler.transform(input_df)
-    except ValueError:
-        st.error("🚨 Error scaling input. Pastikan semua nilai sesuai tipe data.")
-        return
+    # Scaling
+    scaled_input = scaler.transform(input_df)
 
-    # Tombol prediksi
-    if st.button("🔍 Prediksi Status", use_container_width=True):
-        try:
-            prediction = model.predict(scaled_features)[0]
-            probabilities = model.predict_proba(scaled_features)[0]
-            predicted_status = status_map[prediction]
+    # Prediksi
+    if st.button("🔍 Prediksi"):
+        prediction = model.predict(scaled_input)[0]
+        probabilities = model.predict_proba(scaled_input)[0]
+        status_map = {0: 'Dropout', 1: 'Graduate', 2: 'Enrolled'}
+        predicted_status = status_map.get(prediction, "Unknown")
 
-            # Tampilkan hasil
-            color_map = {"Dropout": "#FF6B6B", "Graduate": "#4CAF50", "Enrolled": "#2196F3"}
-            result_color = color_map.get(predicted_status, "#AAAAAA")
-
-            st.markdown(f"""
-            <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; margin-top: 10px; border-left: 5px solid {result_color};'>
-                <h3>Status Prediksi</h3>
-                <p><strong>{predicted_status}</strong></p>
-                <p>Dropout: {probabilities[0]:.2%}</p>
-                <p>Graduate: {probabilities[1]:.2%}</p>
-                <p>Enrolled: {probabilities[2]:.2%}</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-            if predicted_status == 'Dropout':
-                st.warning("⚠️ Risiko Tinggi Dropout! Pertimbangkan intervensi finansial/akademik.")
-            elif predicted_status == 'Graduate':
-                st.success("✅ Mahasiswa diprediksi lulus.")
-            else:
-                st.info("ℹ️ Mahasiswa cenderung tetap aktif.")
-
-        except Exception as e:
-            st.error(f"🚨 Error saat prediksi: {str(e)}")
-            st.info("Pastikan semua field terisi dengan benar.")
+        st.markdown(f"""
+        <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
+            <h3>Hasil Prediksi</h3>
+            <p>Status: <strong>{predicted_status}</strong></p>
+            <p>Peluang Dropout: {probabilities[0]:.2%}</p>
+            <p>Peluang Graduate: {probabilities[1]:.2%}</p>
+            <p>Peluang Enrolled: {probabilities[2]:.2%}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Main App
 def main():
