@@ -9,12 +9,15 @@ from xgboost import XGBClassifier
 from sklearn.datasets import make_classification
 import os
 
-# Load the model and scaler
+# Load the model and scaler with error handling
 try:
     model = joblib.load('model/best_model.joblib')
     scaler = joblib.load('model/scaler.joblib')
+except FileNotFoundError as e:
+    st.error("🚨 File model atau scaler tidak ditemukan. Pastikan semua file tersedia.")
+    st.stop()
 except Exception as e:
-    st.error(f"🚨 Gagal memuat model/scaler: {str(e)}")
+    st.error(f"🚨 Error saat memuat model: {str(e)}")
     st.stop()
 
 # Load dataset for visualization
