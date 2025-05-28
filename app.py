@@ -60,13 +60,13 @@ def home_page():
     # Gambar institusi (fallback jika tidak ditemukan)
     col1, col2 = st.columns([2, 3])
     with col1:
-        try:
-            st.image("asset/jayajaya.png", use_column_width=True, caption="Logo Institusi")
-        except:
+        if os.path.exists("asset/jayajaya.png"):
+            st.image("asset/jayajaya.png", use_container_width=True, caption="Jaya Jaya Institut Teknologi Indonesia")
+        else:
             st.markdown("""
-            <div style='background-color: #2e2e2e; padding: 15px; border-radius: 10px; text-align: center;'>
-                <h4>⚠️ Logo Tidak Ditemukan</h4>
-                <p>Pastikan file 'asset/jayajaya.png' tersedia di repo GitHub.</p>
+            <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #777777; text-align: center;'>
+                <h4>Logo Institusi Tidak Ditemukan</h4>
+                <p>Mohon pastikan file 'asset/jayajaya.png' sudah diupload ke GitHub.</p>
             </div>
             """, unsafe_allow_html=True)
 
