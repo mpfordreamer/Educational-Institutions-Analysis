@@ -9,7 +9,7 @@ from xgboost import XGBClassifier
 from sklearn.datasets import make_classification
 import os
 
-# Load the model and scaler with error handling
+# Load the model and scaler
 try:
     model_dir = 'model'
     model_files = ['best_model.joblib', 'best_model.pkl']
