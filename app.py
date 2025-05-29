@@ -618,9 +618,9 @@ def data_insights():
         """, unsafe_allow_html=True)
 
     # Recommendation
-    with st.expander("🎯 Rekomendasi Tindakan: Intervensi Strategis untuk Peningkatan Retensi Mahasiswa"):
+    with st.expander("🎯 Rekomendasi Tindakan"):
         st.markdown("""
-        <div style='background-color: dark; padding: 25px; border-radius: 10px; border: 1px solid #DDD;'>
+        <div style='background-color: dark;'>
             <h4 style='color: #ffffff; margin-bottom: 20px;'>Mengubah Wawasan Data Menjadi Aksi Konkret di JAYA JAYA INSTITUTE EDUCATION:</h4>
             <ul style='list-style-type: disc; padding-left: 20px; color: #ffffff; font-size: 15px; line-height: 1.6;'>
                 <li>
