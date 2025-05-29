@@ -99,6 +99,8 @@ Berikut adalah ringkasan hasil evaluasi performa model yang telah dioptimalkan:
 
 **Detail Performa Model Terbaik (XGBoostClassifier):**
 
+![image](https://github.com/user-attachments/assets/1172b612-65e6-4a2c-b3bf-cb0f56961682)
+
 Model XGBoost yang telah dioptimalkan dengan *hyperparameter* terbaik (`n_estimators`: 381, `learning_rate`: 0.077, `max_depth`: 10, `min_child_weight`: 1, `subsample`: 0.664, `colsample_bytree`: 0.885) mencapai **akurasi tes sebesar 0.77 (atau 77%)**. *Confusion matrix* dan *classification report* menunjukkan performa klasifikasi status mahasiswa sebagai berikut:
 
 *   **Graduate (Kelas 1):** Diprediksi dengan **sangat baik**. Model mengidentifikasi **409 dari 442** mahasiswa Graduate (recall **0.88**), menghasilkan F1-score tertinggi (**0.85**). Kesalahan klasifikasi minimal (**6** salah sebagai Dropout, **27** sebagai Enrolled).
