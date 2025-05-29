@@ -9,10 +9,6 @@ from xgboost import XGBClassifier
 from sklearn.datasets import make_classification
 import os
 
-import os
-import joblib
-import streamlit as st
-
 # Load the model and scaler with error handling
 try:
     model_dir = 'model'
@@ -578,7 +574,6 @@ def data_insights():
     # Demographics
     with st.expander("📊 Kesimpulan Demografis"):
         st.markdown("""
-        ### 📊 Analisis Demografis Mahasiswa
         - Mayoritas mahasiswa yang dropout berusia lebih tua dibanding rata-rata.
         - Terdapat perbedaan signifikan dalam distribusi gender antara mahasiswa yang lulus dan dropout.
         - Status pernikahan memiliki korelasi dengan tingkat kelulusan.
@@ -587,7 +582,6 @@ def data_insights():
     # Academics
     with st.expander("📚 Kesimpulan Performa Akademik"):
         st.markdown("""
-        ### 📚 Analisis Performa Akademik
         - Nilai kualifikasi sebelumnya dan nilai masuk berkorelasi positif dengan kelulusan.
         - Mahasiswa yang lulus menunjukkan performa lebih baik di semester pertama.
         - Jumlah SKS yang diambil dan diluluskan memiliki pola yang berbeda antar status.
@@ -596,7 +590,6 @@ def data_insights():
     # Financial
     with st.expander("💰 Kesimpulan Faktor Finansial"):
         st.markdown("""
-        ### 💰 Analisis Faktor Finansial
         - Penerima beasiswa memiliki tingkat kelulusan yang lebih tinggi.
         - Status tunggakan berkorelasi dengan tingkat dropout.
         - Kondisi ekonomi (GDP dan tingkat pengangguran) mempengaruhi status akademik.
@@ -604,9 +597,7 @@ def data_insights():
     
     # Recommendation
     with st.expander("🎯 Rekomendasi Tindakan"):
-        st.markdown("""
-        ### 🎯 Mengubah Wawasan Data Menjadi Aksi Konkret di JAYA JAYA INSTITUTE EDUCATION
-    
+        st.markdown("""    
         - **Dukungan Finansial Proaktif:**  
           Institusi perlu segera mendeteksi mahasiswa yang kesulitan membayar biaya kuliah. Sediakan opsi pembayaran fleksibel, skema cicilan, atau bantuan keuangan darurat untuk mencegah dropout.
     
