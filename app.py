@@ -617,35 +617,35 @@ def data_insights():
         </div>
         """, unsafe_allow_html=True)
 
-    # Recommendation
-    with st.expander("🎯 Rekomendasi Tindakan: Intervensi Strategis untuk Peningkatan Retensi Mahasiswa"):
-        st.markdown("""
-        <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
-            <h4 style='color: #1f77b4;'>Mengubah Wawasan Data Menjadi Aksi Konkret di JAYA JAYA INSTITUTE EDUCATION:</h4>
-            <ul style='list-style-type: disc; padding-left: 20px;'>
-                <li style='margin-bottom: 10px;'>
-                    <strong style='color: #8c564b;'>Dukungan Finansial Proaktif:</strong><br>
-                    Institusi perlu segera mendeteksi mahasiswa yang kesulitan membayar biaya kuliah. Sediakan opsi pembayaran yang lebih fleksibel, akses mudah ke skema cicilan, atau program bantuan keuangan darurat untuk mencegah masalah finansial menjadi penyebab <em>dropout</em>.
-                </li>
-                <li style='margin-bottom: 10px;'>
-                    <strong style='color: #2ca02c;'>Perhatian Akademik di Semester Awal:</strong><br>
-                    Pantau ketat performa akademik mahasiswa di semester pertama dan kedua. Segera berikan bimbingan belajar, sesi tutor, atau konseling akademik yang ditargetkan bagi mereka yang menunjukkan penurunan kinerja.
-                </li>
-                <li style='margin-bottom: 10px;'>
-                    <strong style='color: #ff7f0e;'>Perluasan dan Promosi Program Beasiswa:</strong><br>
-                    Beasiswa memiliki dampak besar terhadap keberhasilan mahasiswa. Tingkatkan cakupan dan promosi program beasiswa untuk meringankan beban finansial dan meningkatkan komitmen mahasiswa terhadap studi.
-                </li>
-                <li style='margin-bottom: 10px;'>
-                    <strong style='color: #9467bd;'>Manajemen Beban Studi yang Realistis:</strong><br>
-                    Dorong konseling akademik yang intensif untuk membantu mahasiswa merencanakan jumlah SKS yang sesuai dengan kemampuan mereka. Berikan dukungan ekstra bagi yang kesulitan dalam menyelesaikan mata kuliah.
-                </li>
-                <li style='margin-bottom: 10px;'>
-                    <strong style='color: #d62728;'>Program Mentoring dan Konseling Holistik:</strong><br>
-                    Sediakan program <em>mentoring</em> dan konseling personal yang mempertimbangkan berbagai latar belakang mahasiswa, termasuk usia dan kebangsaan. Pendekatan ini penting untuk mengatasi tantangan adaptasi, sosial, atau psikologis yang mungkin dihadapi mahasiswa berisiko.
-                </li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
+# Recommendation
+with st.expander("🎯 Rekomendasi Tindakan: Intervensi Strategis untuk Peningkatan Retensi Mahasiswa"):
+    st.markdown("""
+    <div style='background-color: #F9F9F9; padding: 25px; border-radius: 10px; border: 1px solid #DDD;'>
+        <h4 style='color: #333333; margin-bottom: 20px;'>Mengubah Wawasan Data Menjadi Aksi Konkret di JAYA JAYA INSTITUTE EDUCATION:</h4>
+        <ul style='list-style-type: disc; padding-left: 20px; color: #333333; font-size: 15px; line-height: 1.6;'>
+            <li>
+                <strong>Dukungan Finansial Proaktif:</strong><br>
+                Institusi perlu segera mendeteksi mahasiswa yang kesulitan membayar biaya kuliah. Sediakan opsi pembayaran yang lebih fleksibel, akses mudah ke skema cicilan, atau program bantuan keuangan darurat untuk mencegah masalah finansial menjadi penyebab <em>dropout</em>.
+            </li>
+            <li>
+                <strong>Perhatian Akademik di Semester Awal:</strong><br>
+                Pantau ketat performa akademik mahasiswa di semester pertama dan kedua. Segera berikan bimbingan belajar, sesi tutor, atau konseling akademik yang ditargetkan bagi mereka yang menunjukkan penurunan kinerja.
+            </li>
+            <li>
+                <strong>Perluasan dan Promosi Program Beasiswa:</strong><br>
+                Beasiswa memiliki dampak besar terhadap keberhasilan mahasiswa. Tingkatkan cakupan dan promosi program beasiswa untuk meringankan beban finansial dan meningkatkan komitmen mahasiswa terhadap studi.
+            </li>
+            <li>
+                <strong>Manajemen Beban Studi yang Realistis:</strong><br>
+                Dorong konseling akademik yang intensif untuk membantu mahasiswa merencanakan jumlah SKS yang sesuai dengan kemampuan mereka. Berikan dukungan ekstra bagi yang kesulitan dalam menyelesaikan mata kuliah.
+            </li>
+            <li>
+                <strong>Program Mentoring dan Konseling Holistik:</strong><br>
+                Sediakan program <em>mentoring</em> dan konseling personal yang mempertimbangkan berbagai latar belakang mahasiswa, termasuk usia dan kebangsaan. Pendekatan ini penting untuk mengatasi tantangan adaptasi, sosial, atau psikologis yang mungkin dihadapi mahasiswa berisiko.
+            </li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # Prediction_page
