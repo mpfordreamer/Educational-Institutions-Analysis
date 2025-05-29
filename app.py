@@ -575,69 +575,53 @@ def data_insights():
 
     st.plotly_chart(fig, use_container_width=True)
 
-    card_style = """
-    <div style='background-color: #F9F9F9; padding: 25px; border-radius: 10px; border: 1px solid #DDD;'>
-        <h4 style='color: #333333; margin-bottom: 20px;'>{title}</h4>
-        <ul style='list-style-type: disc; padding-left: 20px; color: #333333; font-size: 15px; line-height: 1.6;'>
-            {items}
-        </ul>
-    </div>
-    """
-    
     # Demographics
     with st.expander("📊 Kesimpulan Demografis"):
-        st.markdown(card_style.format(
-            title="📊 Analisis Demografis Mahasiswa",
-            items="""
-            <li>Mayoritas mahasiswa yang dropout berusia lebih tua dibanding rata-rata.</li>
-            <li>Terdapat perbedaan signifikan dalam distribusi gender antara mahasiswa yang lulus dan dropout.</li>
-            <li>Status pernikahan memiliki korelasi dengan tingkat kelulusan.</li>
-            """
-        ), unsafe_allow_html=True)
+        st.markdown("""
+        ### 📊 Analisis Demografis Mahasiswa
+        - Mayoritas mahasiswa yang dropout berusia lebih tua dibanding rata-rata.
+        - Terdapat perbedaan signifikan dalam distribusi gender antara mahasiswa yang lulus dan dropout.
+        - Status pernikahan memiliki korelasi dengan tingkat kelulusan.
+        """)
     
     # Academics
     with st.expander("📚 Kesimpulan Performa Akademik"):
-        st.markdown(card_style.format(
-            title="📚 Analisis Performa Akademik",
-            items="""
-            <li>Nilai kualifikasi sebelumnya dan nilai masuk berkorelasi positif dengan kelulusan.</li>
-            <li>Mahasiswa yang lulus menunjukkan performa lebih baik di semester pertama.</li>
-            <li>Jumlah SKS yang diambil dan diluluskan memiliki pola yang berbeda antar status.</li>
-            """
-        ), unsafe_allow_html=True)
+        st.markdown("""
+        ### 📚 Analisis Performa Akademik
+        - Nilai kualifikasi sebelumnya dan nilai masuk berkorelasi positif dengan kelulusan.
+        - Mahasiswa yang lulus menunjukkan performa lebih baik di semester pertama.
+        - Jumlah SKS yang diambil dan diluluskan memiliki pola yang berbeda antar status.
+        """)
     
     # Financial
     with st.expander("💰 Kesimpulan Faktor Finansial"):
-        st.markdown(card_style.format(
-            title="💰 Analisis Faktor Finansial",
-            items="""
-            <li>Penerima beasiswa memiliki tingkat kelulusan yang lebih tinggi.</li>
-            <li>Status tunggakan berkorelasi dengan tingkat dropout.</li>
-            <li>Kondisi ekonomi (GDP dan tingkat pengangguran) mempengaruhi status akademik.</li>
-            """
-        ), unsafe_allow_html=True)
+        st.markdown("""
+        ### 💰 Analisis Faktor Finansial
+        - Penerima beasiswa memiliki tingkat kelulusan yang lebih tinggi.
+        - Status tunggakan berkorelasi dengan tingkat dropout.
+        - Kondisi ekonomi (GDP dan tingkat pengangguran) mempengaruhi status akademik.
+        """)
     
     # Recommendation
     with st.expander("🎯 Rekomendasi Tindakan"):
-        st.markdown(card_style.format(
-            title="🎯 Mengubah Wawasan Data Menjadi Aksi Konkret di JAYA JAYA INSTITUTE EDUCATION",
-            items="""
-            <li><strong>Dukungan Finansial Proaktif:</strong><br>
-            Institusi perlu segera mendeteksi mahasiswa yang kesulitan membayar biaya kuliah. Sediakan opsi pembayaran yang lebih fleksibel, akses mudah ke skema cicilan, atau program bantuan keuangan darurat untuk mencegah masalah finansial menjadi penyebab <em>dropout</em>.</li>
+        st.markdown("""
+        ### 🎯 Mengubah Wawasan Data Menjadi Aksi Konkret di JAYA JAYA INSTITUTE EDUCATION
     
-            <li><strong>Perhatian Akademik di Semester Awal:</strong><br>
-            Pantau ketat performa akademik mahasiswa di semester pertama dan kedua. Segera berikan bimbingan belajar, sesi tutor, atau konseling akademik yang ditargetkan bagi mereka yang menunjukkan penurunan kinerja.</li>
+        - **Dukungan Finansial Proaktif:**  
+          Institusi perlu segera mendeteksi mahasiswa yang kesulitan membayar biaya kuliah. Sediakan opsi pembayaran fleksibel, skema cicilan, atau bantuan keuangan darurat untuk mencegah dropout.
     
-            <li><strong>Perluasan dan Promosi Program Beasiswa:</strong><br>
-            Beasiswa memiliki dampak besar terhadap keberhasilan mahasiswa. Tingkatkan cakupan dan promosi program beasiswa untuk meringankan beban finansial dan meningkatkan komitmen mahasiswa terhadap studi.</li>
+        - **Perhatian Akademik di Semester Awal:**  
+          Pantau performa akademik mahasiswa di semester awal. Berikan bimbingan belajar, tutor, atau konseling bagi yang menunjukkan penurunan kinerja.
     
-            <li><strong>Manajemen Beban Studi yang Realistis:</strong><br>
-            Dorong konseling akademik yang intensif untuk membantu mahasiswa merencanakan jumlah SKS yang sesuai dengan kemampuan mereka. Berikan dukungan ekstra bagi yang kesulitan dalam menyelesaikan mata kuliah.</li>
+        - **Perluasan dan Promosi Beasiswa:**  
+          Beasiswa sangat membantu keberhasilan studi. Perluas cakupan dan promosi beasiswa untuk mengurangi beban finansial mahasiswa.
     
-            <li><strong>Program Mentoring dan Konseling Holistik:</strong><br>
-            Sediakan program <em>mentoring</em> dan konseling personal yang mempertimbangkan berbagai latar belakang mahasiswa, termasuk usia dan kebangsaan. Pendekatan ini penting untuk mengatasi tantangan adaptasi, sosial, atau psikologis yang mungkin dihadapi mahasiswa berisiko.</li>
-            """
-        ), unsafe_allow_html=True)    
+        - **Manajemen Beban Studi yang Realistis:**  
+          Bantu mahasiswa merencanakan jumlah SKS sesuai kemampuan melalui konseling akademik intensif.
+    
+        - **Program Mentoring dan Konseling Holistik:**  
+          Sediakan mentoring dan konseling personal yang mempertimbangkan usia dan latar belakang mahasiswa untuk membantu adaptasi sosial dan psikologis.
+        """)    
 
 # Prediction_page
 def prediction_page():
