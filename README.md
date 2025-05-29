@@ -1,6 +1,7 @@
 # **Proyek Data Science: Meningkatkan Retensi dan Keberhasilan Akademik di Jaya Jaya Institute Education**
 
 ## **Business Understanding**
+![jayajaya](https://github.com/user-attachments/assets/9205e4a5-4db9-4f16-8a0a-b509f177d367)
 
 **Jaya Jaya Institute Education** saat ini menghadapi tantangan signifikan terkait tingkat putus sekolah (*dropout*), status mahasiswa aktif (*enrolled*), dan keberhasilan kelulusan (*graduate*). Angka *dropout* yang tinggi tidak hanya merugikan reputasi institusi, tetapi juga menyia-nyiakan sumber daya yang telah diinvestasikan dalam pendidikan mahasiswa. Dengan pemahaman mendalam tentang faktor-faktor yang memengaruhi keputusan mahasiswa untuk melanjutkan atau menghentikan studi, institusi dapat merancang dan mengimplementasikan strategi intervensi yang lebih cerdas dan efektif untuk meningkatkan retensi serta memastikan capaian akademik yang lebih tinggi.
 
