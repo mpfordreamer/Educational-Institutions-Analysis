@@ -620,9 +620,9 @@ def data_insights():
     # Recommendation
     with st.expander("🎯 Rekomendasi Tindakan: Intervensi Strategis untuk Peningkatan Retensi Mahasiswa"):
         st.markdown("""
-        <div style='background-color: #F9F9F9; padding: 25px; border-radius: 10px; border: 1px solid #DDD;'>
-            <h4 style='color: #333333; margin-bottom: 20px;'>Mengubah Wawasan Data Menjadi Aksi Konkret di JAYA JAYA INSTITUTE EDUCATION:</h4>
-            <ul style='list-style-type: disc; padding-left: 20px; color: #333333; font-size: 15px; line-height: 1.6;'>
+        <div style='background-color: #dark; padding: 25px; border-radius: 10px; border: 1px solid #DDD;'>
+            <h4 style='color: #ffffff; margin-bottom: 20px;'>Mengubah Wawasan Data Menjadi Aksi Konkret di JAYA JAYA INSTITUTE EDUCATION:</h4>
+            <ul style='list-style-type: disc; padding-left: 20px; color: #ffffff; font-size: 15px; line-height: 1.6;'>
                 <li>
                     <strong>Dukungan Finansial Proaktif:</strong><br>
                     Institusi perlu segera mendeteksi mahasiswa yang kesulitan membayar biaya kuliah. Sediakan opsi pembayaran yang lebih fleksibel, akses mudah ke skema cicilan, atau program bantuan keuangan darurat untuk mencegah masalah finansial menjadi penyebab <em>dropout</em>.
