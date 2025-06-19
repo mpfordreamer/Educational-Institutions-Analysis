@@ -173,7 +173,7 @@ def home_page():
         try:
             st.markdown("""
             <div style="display: flex; align-items: center; justify-content: center;">
-                <img src="https://raw.githubusercontent.com/demahesta/educational-institutions-analysis/main/asset/jayajaya.png " 
+                <img src="https://raw.githubusercontent.com/demahesta/educational-institutions-analysis/main/asset/jayajaya.png" 
                      alt="Logo Institusi" 
                      style="max-width: 100%; height: auto; border-radius: 10px;">
             </div>
