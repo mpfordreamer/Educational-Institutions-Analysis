@@ -11,21 +11,8 @@ import os
 
 # Load the model and scaler
 try:
-    model_dir = 'model'
-    model_files = ['best_model.joblib', 'best_model.pkl']
-
-    model_path = None
-    for f in model_files:
-        path = os.path.join(model_dir, f)
-        if os.path.exists(path):
-            model_path = path
-            break
-
-    if model_path is None:
-        raise FileNotFoundError("Model file not found")
-
-    model = joblib.load(model_path)
-    scaler = joblib.load(os.path.join(model_dir, 'scaler.joblib'))
+    model = joblib.load('model/best_model.joblib')
+    scaler = joblib.load('model/scaler.joblib')
 except Exception as e:
     st.error(f"🚨 Gagal memuat model/scaler: {str(e)}")
     st.stop()
@@ -34,13 +21,10 @@ except Exception as e:
 try:
     df = pd.read_csv('dataset/dashboard_full_predictions.csv')
 except FileNotFoundError:
-    st.warning("⚠️ Dataset tidak ditemukan. Beberapa visualisasi tidak akan muncul.")
-    df = pd.DataFrame()  # Fallback dataframe kosong
+    st.error("🚨 Dataset tidak ditemukan. Pastikan file 'dashboard_full_predictions.csv' tersedia.")
+    st.stop()
 
-# Mapping label
-status_map = {0: 'Dropout', 1: 'Graduate', 2: 'Enrolled'}
-
-# Daftar fitur penting
+# Define ALL_FEATURES (sesuai dengan fitur yang digunakan saat training)
 ALL_FEATURES = [
     'Marital_status', 'Application_mode', 'Application_order', 'Course',
     'Daytime_evening_attendance', 'Previous_qualification', 'Previous_qualification_grade',
@@ -56,6 +40,10 @@ ALL_FEATURES = [
     'Curricular_units_2nd_sem_grade', 'Curricular_units_2nd_sem_without_evaluations',
     'Unemployment_rate', 'Inflation_rate', 'GDP'
 ]
+
+# Mapping untuk label
+status_map = {0: 'Dropout', 1: 'Graduate', 2: 'Enrolled'}
+gender_map = {0: 'Female', 1: 'Male'}
 
 # Fungsi Home Page
 def home_page():
@@ -178,26 +166,19 @@ def home_page():
     # Title
     st.title("🎓 Student Academic Success Analysis")
 
-    col1, col2 = st.columns([2, 3])  
+    col1, col2 = st.columns([2, 2])  
 
     with col1:
         try:
-            # Coba muat gambar dari path lokal
-            if os.path.exists("asset/jayajaya.png"):
-                st.image("asset/jayajaya.png", use_column_width=True, caption="Logo Institusi")
-            else:
-                # Jika file tidak ditemukan di lokal, gunakan URL dari GitHub
-                github_image_url = "https://github.com/mpfordreamer/Educational-Institutions-Analysis/blob/main/asset/jayajaya.png?raw=true "
-                st.image(github_image_url, use_column_width=True, caption="Logo Institusi")
-        except Exception as e:
-            # Jika gagal, tampilkan pesan fallback
-            st.markdown(f"""
-            <div style='background-color: #2e2e2e; padding: 15px; border-radius: 8px; text-align: center;'>
-                <h4>⚠️ Logo Tidak Ditemukan</h4>
-                <p>Pastikan file 'asset/jayajaya.png' tersedia di repo GitHub.</p>
-                <p>Error Detail: {str(e)}</p>
+            st.markdown("""
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <img src="https://raw.githubusercontent.com/demahesta/educational-institutions-analysis/main/asset/jayajaya.png " 
+                     alt="Logo Institusi" 
+                     style="max-width: 100%; height: auto; border-radius: 10px;">
             </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
+        except Exception as e:
+            st.error("⚠️ Logo institusi gagal dimuat. Pastikan file tersedia.")
 
     with col2:
         # Background Institution Section
@@ -336,77 +317,6 @@ def data_insights():
                     title='Gender Distribution by Status',
                     color_discrete_sequence=['#FF69B4', '#4169E1'])
         st.plotly_chart(fig, use_container_width=True)
-
-    # Academic Performance Indicators (Closure principle)
-    st.header("Academic Performance Indicators")
-    
-    # Create tabs for different academic metrics
-    performance_tabs = st.tabs([
-        "📚 Qualification Grades", 
-        "📊 Unit Performance", 
-        "💰 Financial Factors"
-    ])
-    
-    with performance_tabs[0]:
-        col1, col2 = st.columns(2)
-        with col1:
-            fig = px.violin(df, x='Status', y='Previous_qualification_grade',
-                          color='Status', box=True,
-                          title='Previous Qualification Grade Distribution')
-            st.plotly_chart(fig, use_container_width=True)
-        
-        with col2:
-            fig = px.violin(df, x='Status', y='Admission_grade',
-                          color='Status', box=True,
-                          title='Admission Grade Distribution')
-            st.plotly_chart(fig, use_container_width=True)
-    
-    with performance_tabs[1]:
-        col1, col2 = st.columns(2)
-        with col1:
-            # First Semester Performance
-            fig = px.scatter(df, 
-                           x='Curricular_units_1st_sem_enrolled',
-                           y='Curricular_units_1st_sem_approved',
-                           color='Status',
-                           title='1st Semester: Enrolled vs Approved Units',
-                           trendline="ols")
-            st.plotly_chart(fig, use_container_width=True)
-        
-        with col2:
-            # Second Semester Performance
-            fig = px.scatter(df,
-                           x='Curricular_units_2nd_sem_enrolled',
-                           y='Curricular_units_2nd_sem_approved',
-                           color='Status',
-                           title='2nd Semester: Enrolled vs Approved Units',
-                           trendline="ols")
-            st.plotly_chart(fig, use_container_width=True)
-    
-    with performance_tabs[2]:
-        col1, col2 = st.columns(2)
-        with col1:
-            # Financial Status Distribution
-            financial_data = pd.DataFrame({
-                'Category': ['Debtor', 'Non-Debtor'],
-                'Count': [df['Debtor'].sum(), len(df) - df['Debtor'].sum()]
-            })
-            fig = px.pie(financial_data, values='Count', names='Category',
-                        title='Student Debtor Distribution',
-                        color_discrete_sequence=['#FF6B6B', '#4CAF50'])
-            st.plotly_chart(fig, use_container_width=True)
-        
-        with col2:
-            # Scholarship Distribution
-            scholarship_data = pd.DataFrame({
-                'Category': ['With Scholarship', 'Without Scholarship'],
-                'Count': [df['Scholarship_holder'].sum(), 
-                         len(df) - df['Scholarship_holder'].sum()]
-            })
-            fig = px.pie(scholarship_data, values='Count', names='Category',
-                        title='Scholarship Distribution',
-                        color_discrete_sequence=['#4CAF50', '#FF6B6B'])
-            st.plotly_chart(fig, use_container_width=True)
 
     # Social and Background Analysis
     st.header("Social and Background Analysis")
@@ -571,52 +481,67 @@ def data_insights():
 
     st.plotly_chart(fig, use_container_width=True)
 
+    # Analysis Conclusion
+    st.header("💡 Kesimpulan Analisis")
+    
     # Demographics
     with st.expander("📊 Kesimpulan Demografis"):
         st.markdown("""
-        - Mayoritas mahasiswa yang dropout berusia lebih tua dibanding rata-rata.
-        - Terdapat perbedaan signifikan dalam distribusi gender antara mahasiswa yang lulus dan dropout.
-        - Status pernikahan memiliki korelasi dengan tingkat kelulusan.
-        """)
-    
+        <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
+            <h4 style='color: #1f77b4;'>Analisis Demografis Mahasiswa</h4>
+            <ul>
+                <li>Mayoritas mahasiswa yang dropout berusia lebih tua dibanding rata-rata</li>
+                <li>Terdapat perbedaan signifikan dalam distribusi gender antara mahasiswa yang lulus dan dropout</li>
+                <li>Status pernikahan memiliki korelasi dengan tingkat kelulusan</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
     # Academics
     with st.expander("📚 Kesimpulan Performa Akademik"):
         st.markdown("""
-        - Nilai kualifikasi sebelumnya dan nilai masuk berkorelasi positif dengan kelulusan.
-        - Mahasiswa yang lulus menunjukkan performa lebih baik di semester pertama.
-        - Jumlah SKS yang diambil dan diluluskan memiliki pola yang berbeda antar status.
-        """)
-    
+        <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
+            <h4 style='color: #1f77b4;'>Analisis Performa Akademik</h4>
+            <ul>
+                <li>Nilai kualifikasi sebelumnya dan nilai masuk berkorelasi positif dengan kelulusan</li>
+                <li>Mahasiswa yang lulus menunjukkan performa lebih baik di semester pertama</li>
+                <li>Jumlah SKS yang diambil dan diluluskan memiliki pola yang berbeda antar status</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
     # Financial
     with st.expander("💰 Kesimpulan Faktor Finansial"):
         st.markdown("""
-        - Penerima beasiswa memiliki tingkat kelulusan yang lebih tinggi.
-        - Status tunggakan berkorelasi dengan tingkat dropout.
-        - Kondisi ekonomi (GDP dan tingkat pengangguran) mempengaruhi status akademik.
-        """)
-    
+        <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
+            <h4 style='color: #1f77b4;'>Analisis Faktor Finansial</h4>
+            <ul>
+                <li>Penerima beasiswa memiliki tingkat kelulusan yang lebih tinggi</li>
+                <li>Status tunggakan berkorelasi dengan tingkat dropout</li>
+                <li>Kondisi ekonomi (GDP dan tingkat pengangguran) mempengaruhi status akademik</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
     # Recommendation
     with st.expander("🎯 Rekomendasi Tindakan"):
-        st.markdown("""    
-        - **Dukungan Finansial Proaktif:**  
-          Institusi perlu segera mendeteksi mahasiswa yang kesulitan membayar biaya kuliah. Sediakan opsi pembayaran fleksibel, skema cicilan, atau bantuan keuangan darurat untuk mencegah dropout.
-    
-        - **Perhatian Akademik di Semester Awal:**  
-          Pantau performa akademik mahasiswa di semester awal. Berikan bimbingan belajar, tutor, atau konseling bagi yang menunjukkan penurunan kinerja.
-    
-        - **Perluasan dan Promosi Beasiswa:**  
-          Beasiswa sangat membantu keberhasilan studi. Perluas cakupan dan promosi beasiswa untuk mengurangi beban finansial mahasiswa.
-    
-        - **Manajemen Beban Studi yang Realistis:**  
-          Bantu mahasiswa merencanakan jumlah SKS sesuai kemampuan melalui konseling akademik intensif.
-    
-        - **Program Mentoring dan Konseling Holistik:**  
-          Sediakan mentoring dan konseling personal yang mempertimbangkan usia dan latar belakang mahasiswa untuk membantu adaptasi sosial dan psikologis.
-        """)    
+        st.markdown("""
+        <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px;'>
+            <h4 style='color: #1f77b4;'>Rekomendasi untuk Institusi</h4>
+            <ul>
+                <li>Tingkatkan dukungan finansial untuk mahasiswa dengan risiko dropout tinggi</li>
+                <li>Berikan perhatian khusus pada performa akademik semester pertama</li>
+                <li>Implementasikan program mentoring untuk mahasiswa berisiko</li>
+                <li>Evaluasi dan sesuaikan beban SKS berdasarkan kemampuan mahasiswa</li>
+                <li>Tingkatkan akses terhadap program beasiswa</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Prediction_page
 def prediction_page():
     """Halaman prediksi status akademik mahasiswa menggunakan model XGBoost"""
+    
     st.title("🔮 Prediksi Status Akademik Mahasiswa")
     st.markdown("""
     <div style='background-color: #1E1E1E; padding: 15px; border-radius: 8px; margin-bottom: 20px;'>
@@ -624,55 +549,66 @@ def prediction_page():
     </div>
     """, unsafe_allow_html=True)
 
-    # Layout dua kolom
+    # Create columns for better layout
     col1, col2 = st.columns(2)
 
-    # Inisialisasi input data
+    # Initialize input data dictionary
     input_data = {feature: 0 for feature in ALL_FEATURES}
-
+    
     with col1:
         st.subheader("📚 Informasi Akademik")
+        
+        # Academic Information
         input_data['Previous_qualification_grade'] = st.number_input("Nilai Kualifikasi Sebelumnya", 0.0, 200.0, 120.0)
         input_data['Admission_grade'] = st.number_input("Nilai Masuk", 0.0, 200.0, 120.0)
-
+        
+        # Semester 1x
         st.markdown("##### Data Semester 1")
         input_data['Curricular_units_1st_sem_approved'] = st.number_input("Jumlah SKS Lulus Semester 1", 0, 20, 6)
         input_data['Curricular_units_1st_sem_grade'] = st.number_input("Nilai Rata-rata Semester 1", 0.0, 20.0, 12.0)
-
+        
+        # Semester 2
         st.markdown("##### Data Semester 2")
         input_data['Curricular_units_2nd_sem_approved'] = st.number_input("Jumlah SKS Lulus Semester 2", 0, 20, 6)
         input_data['Curricular_units_2nd_sem_grade'] = st.number_input("Nilai Rata-rata Semester 2", 0.0, 20.0, 12.0)
 
     with col2:
         st.subheader("👤 Informasi Personal")
+        
+        # Data Demografis
         input_data['Age_at_enrollment'] = st.number_input("Usia Saat Mendaftar", 17, 70, 20)
         input_data['Gender'] = 1 if st.selectbox("Jenis Kelamin", ['Perempuan', 'Laki-laki']) == 'Laki-laki' else 0
-
+        
+        # Status Finansial
         st.markdown("##### Status Finansial")
         input_data['Tuition_fees_up_to_date'] = 1 if st.selectbox("Status Pembayaran SPP", ['Belum Lunas', 'Lunas']) == 'Lunas' else 0
         input_data['Scholarship_holder'] = 1 if st.selectbox("Penerima Beasiswa", ['Tidak', 'Ya']) == 'Ya' else 0
         input_data['Debtor'] = 1 if st.selectbox("Status Tunggakan", ['Tidak Ada', 'Ada']) == 'Ada' else 0
 
-        # Isi fitur lainnya dengan default jika belum ada
+        # Automatically fill other required features with defaults
         for feature in ALL_FEATURES:
             if feature not in input_data:
                 input_data[feature] = 0
 
-    # Konversi ke DataFrame
+    # Convert to DataFrame
     input_df = pd.DataFrame([input_data])[ALL_FEATURES]
-
-    # Tombol prediksi
+    
+    # Prediction button
     if st.button("Prediksi Status", use_container_width=True):
         try:
             probabilities = model.predict_proba(input_df)
             prediction = model.predict(input_df)[0]
-
-            # Mapping hasil prediksi
+            
+            # Map status codes to Indonesian labels
             status_map = {0: 'Dropout', 1: 'Lulus', 2: 'Aktif'}
             predicted_status = status_map[prediction]
-            dropout_prob, graduate_prob, enrolled_prob = probabilities[0]
-
-            # Tampilkan hasil prediksi
+            
+            # Get probabilities
+            dropout_prob = probabilities[0][0]
+            graduate_prob = probabilities[0][1]
+            enrolled_prob = probabilities[0][2]
+            
+            # Display result
             st.markdown(f"""
             <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; margin-top: 10px;'>
                 <h3 style='color: #1f77b4;'>Hasil Prediksi</h3>
@@ -694,18 +630,17 @@ def prediction_page():
             </div>
             """, unsafe_allow_html=True)
 
-            # Rekomendasi berdasarkan status
+            # Recommendations in Indonesian
             if predicted_status == 'Dropout':
-                st.warning("⚠ Risiko DO Tinggi! Pertimbangkan untuk memberikan bantuan akademik dan finansial.")
+                st.warning("⚠️ Risiko DO Tinggi! Pertimbangkan untuk memberikan bantuan akademik dan finansial.")
             elif predicted_status == 'Lulus':
                 st.success("✅ Potensi Kelulusan Tinggi! Pertahankan prestasi akademik.")
             else:
-                st.info("ℹ Mahasiswa diprediksi tetap aktif. Pantau perkembangan secara berkala.")
-
+                st.info("ℹ️ Mahasiswa diprediksi tetap aktif. Pantau perkembangan secara berkala.")
+                
         except Exception as e:
             st.error(f"Error Prediksi: {str(e)}")
             st.info("Pastikan semua field terisi dengan benar.")
-
 
 def main():
     # Set page config
