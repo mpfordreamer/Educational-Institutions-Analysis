@@ -60,8 +60,9 @@ def home_page():
     # Gambar institusi (fallback jika tidak ditemukan)
     col1, col2 = st.columns([2, 3])
     with col1:
-        if os.path.exists("asset/jayajaya.png"):
-            st.image("asset/jayajaya.png", width=450, caption="Jaya Jaya Institut Teknologi Indonesia")
+        logo_path = os.path.join("asset", "jayajaya.png")
+        if os.path.exists(logo_path):
+            st.image(logo_path, width=450, caption="Jaya Jaya Institut Teknologi Indonesia")
         else:
             st.markdown("""
             <div style='background-color: #1E1E1E; padding: 20px; border-radius: 10px; border: 2px solid #777777; text-align: center;'>
@@ -69,7 +70,7 @@ def home_page():
                 <p>Mohon pastikan file 'asset/jayajaya.png' sudah diupload ke GitHub.</p>
             </div>
             """, unsafe_allow_html=True)
-
+    
     with col2:
         # Statistik utama
         st.markdown("### 🔍 Ringkasan Data")
