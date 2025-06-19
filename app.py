@@ -170,16 +170,11 @@ def home_page():
     col1, col2 = st.columns([2, 2])  
 
     with col1:
-        try:
-            st.markdown("""
-            <div style="display: flex; align-items: center; justify-content: center;">
-                <img src="https://raw.githubusercontent.com/demahesta/educational-institutions-analysis/main/asset/jayajaya.png" 
-                     alt="Logo Institusi" 
-                     style="max-width: 100%; height: auto; border-radius: 10px;">
-            </div>
-            """, unsafe_allow_html=True)
-        except Exception as e:
-            st.error("⚠️ Logo institusi gagal dimuat. Pastikan file tersedia.")
+        logo_path = os.path.join("asset", "jayajaya.png")
+        if os.path.exists(logo_path):
+            st.image(logo_path, width=450, caption="Jaya Jaya Institut Teknologi Indonesia")
+        else:
+            st.warning("⚠️ Logo institusi tidak ditemukan. Pastikan file 'asset/jayajaya.png' tersedia di direktori yang sesuai.")
 
     with col2:
         # Background Institution Section
